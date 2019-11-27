@@ -2,8 +2,8 @@ package com.profectus.product.claim.calculator.service;
 
 import java.util.List;
 
-import com.profectus.product.claim.calculator.repository.DiscountTier;
+import com.profectus.product.claim.calculator.repository.DiscountTierDto;
 
 public interface DiscountTierService {
-	List<DiscountTier> get();
+	List<DiscountTierDto> get();
 }

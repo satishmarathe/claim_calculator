@@ -1,4 +1,4 @@
-package com.profectus.product.claim.calculator.common;
+package com.profectus.product.claim.calculator.validators;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

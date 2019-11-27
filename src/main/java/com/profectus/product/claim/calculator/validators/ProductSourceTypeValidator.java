@@ -1,4 +1,4 @@
-package com.profectus.product.claim.calculator.common;
+package com.profectus.product.claim.calculator.validators;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,8 +12,13 @@ public class ProductSourceTypeValidator implements ConstraintValidator<ProductSo
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-    	
-        return validProductTypes.contains(value.trim().toUpperCase());
+    	if(null != value && value.trim().length() > 0) {
+    		return validProductTypes.contains(value.trim().toUpperCase());
+    	}else {
+    		/** in case of the value being null dont do anything **/
+    		return true;
+    	}
+        
 
     }
 }

@@ -3,10 +3,16 @@ package com.profectus.product.claim.calculator.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer; 
+
 public class TieredClaimDto {
 
 	private String productCode;
+	
+	@JsonSerialize(using = ToStringSerializer.class) 
 	private LocalDate txDate;
+	
 	private BigDecimal saleAmount;
 	private BigDecimal discountAmount;
 	

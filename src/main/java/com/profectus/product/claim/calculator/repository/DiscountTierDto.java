@@ -2,25 +2,11 @@ package com.profectus.product.claim.calculator.repository;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "discount_tiers")
-public class DiscountTier {
-    @Id
-    @Column(name = "tier_id")
+public class DiscountTierDto {
     private Integer tierId;
-
-    @Column(name = "min_amount")
     private BigDecimal minAmount;
-
-    @Column(name = "max_amount")
     private BigDecimal maxAmount;
-    
-    @Column(name = "discount_rate")
     private BigDecimal discountPercent;
 
 	public Integer getTierId() {
@@ -54,10 +40,8 @@ public class DiscountTier {
 	public void setDiscountPercent(BigDecimal discountPercent) {
 		this.discountPercent = discountPercent;
 	}
-	
-	public DiscountTier() {
-	}
-	public DiscountTier(Integer tierId, BigDecimal minAmount, BigDecimal maxAmount, BigDecimal discountPercent) {
+
+	public DiscountTierDto(Integer tierId, BigDecimal minAmount, BigDecimal maxAmount, BigDecimal discountPercent) {
 		super();
 		this.tierId = tierId;
 		this.minAmount = minAmount;
