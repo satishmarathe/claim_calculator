@@ -1,5 +1,7 @@
 package com.profectus.product.claim.calculator.controller;
 
+import java.util.List;
+
 import javax.validation.UnexpectedTypeException;
 import javax.validation.Valid;
 
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.profectus.product.claim.calculator.common.ErrorResponse;
 import com.profectus.product.claim.calculator.dto.ClaimRequestDto;
+import com.profectus.product.claim.calculator.dto.TieredClaimDto;
+import com.profectus.product.claim.calculator.exception.BusinessException;
+import com.profectus.product.claim.calculator.exception.SystemException;
 import com.profectus.product.claim.calculator.service.TieredClaimService;
 
 import org.springframework.http.HttpStatus;
@@ -33,7 +38,7 @@ import org.springframework.http.HttpStatus;
 public class TieredClaimController {
 
 	/** TODO - use proper logging **/
-	private static final Logger logger = LogManager.getLogger(TieredClaimController.class);
+	private static final Logger LOGGER = LogManager.getLogger(TieredClaimController.class);
 
 	@Autowired
 	private TieredClaimService tieredClaimService;
@@ -43,29 +48,38 @@ public class TieredClaimController {
 	@CrossOrigin
 	@PostMapping(path="/tiered/calc")	
 	public ResponseEntity<?> getTieredClaim(@Valid @RequestBody ClaimRequestDto claimRequestDto) {
-
-		/** TODO - need validation framework **/
-		/** TODO - need exception handling **/
-		/** TODO - need to pass and capture query parameters **/
-		try {
-			System.out.println("<<<< in controller calculateTieredClaim  >>>> " + claimRequestDto );
-			/**TODO pass proper parameters **/
-			return ResponseEntity.status(200).body(tieredClaimService.calculateClaim(claimRequestDto));
+		final String METHOD_NAME = "getTieredClaim";
+		
+		LOGGER.info(" {} | {} | Entering input data is  ...  {} ",METHOD_NAME,"xAppCorelationId",claimRequestDto);
+		
+		List<TieredClaimDto> tieredClaimResponseList = null;
+		try {		
+			LOGGER.info(" {} | {} |About to call service ",METHOD_NAME,"xAppCorelationId");
+			tieredClaimResponseList = tieredClaimService.calculateClaim(claimRequestDto,"xAppCorelationId");
+			
+			LOGGER.info(" {} | {} | Exiting successfully with following data ... {}",METHOD_NAME,"xAppCorelationId",tieredClaimResponseList);
+			return ResponseEntity.status(200).body(tieredClaimResponseList);
+		}catch (BusinessException be) {
+			LOGGER.error("{} , {} END , getTieredClaim  {} , Errored out with BusinessException {}",METHOD_NAME,"xAppCorelationId",claimRequestDto,be);
+			/** these are the validation exceptions caught in PL/SQL **/
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(be.getMessage()));			
+		}catch (SystemException se) {
+			LOGGER.error("{} , {} END , getTieredClaim  {} , Errored out with SystemException {}",METHOD_NAME,"xAppCorelationId",claimRequestDto,se);
+			/** these are the validation exceptions caught in PL/SQL **/
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(se.getMessage()));			
 		}catch(Exception e) {
-			e.printStackTrace();
-			/**TODO need proper exception handling **/
+			/** this will catch any unexpected exceptions and also if DAO throws SQLException which will come as a runtime exception **/
+			LOGGER.error("{} , {} END , getTieredClaim with params: {} , Errored out with Unknown Exception {}",METHOD_NAME,"xAppCorelationId",claimRequestDto,e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("System Exception , Please contact System Administrator");
 		}
-		return null;
 
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleException(MethodArgumentNotValidException exception) {
-		System.out.println(" ");
-		System.out.println(" <<< inside MethodArgumentNotValidException >>> ");
-		System.out.println(" ");
-		
+		final String METHOD_NAME = "handleException";
+		LOGGER.info(" {} | {} | Entering handler handling MethodArgumentNotValidException   ...  ",METHOD_NAME,"xAppCorelationId");
 		/**
 		 * when : date is null comes here ( not null validator )
 		 * when : source is invalid ( custom validator ) 
@@ -75,7 +89,8 @@ public class TieredClaimController {
 				.map(DefaultMessageSourceResolvable::getDefaultMessage)
 				.findFirst()
 				.orElse(exception.getMessage());
-		System.out.println("error msg = " + errorMsg);
+		
+		LOGGER.info(" {} | {} | Exiting error message is  ... {}",METHOD_NAME,"xAppCorelationId",errorMsg);
 		//return ErrorResponse.builder().message(errorMsg).build();
 		return new ErrorResponse(errorMsg);
 	}
@@ -83,14 +98,14 @@ public class TieredClaimController {
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleException(InvalidFormatException exception)  {
+		final String METHOD_NAME = "handleException";
+		LOGGER.info(" {} | {} | Entering handler handling InvalidFormatException   ...   ",METHOD_NAME,"xAppCorelationId");
 		/**
 		 * invalid date format comes here 
 		 */
-    	System.out.println(" ");
-		System.out.println(" <<< inside InvalidFormatException >>> ");
-		System.out.println(" ");
-    	
-    	return new ErrorResponse("Date fields should be of the following format: YYYY-mm-dd");
+    	String errorMsg = "Date fields should be of the following format: YYYY-mm-dd";
+    	LOGGER.info(" {} | {} | Exiting  error message is  ... {}",METHOD_NAME,"xAppCorelationId",errorMsg);
+    	return new ErrorResponse(errorMsg);
     }
 	
 	

@@ -33,7 +33,6 @@ public class ClaimRequestDto {
 
 	public ClaimRequestDto(String productTypeSource, LocalDate fromDate, LocalDate toDate) {
 		super();
-		System.out.println("DTO constructor values source = " + productTypeSource + " fromDate = " + fromDate + " toDate = " + toDate);
 		this.productTypeSource = productTypeSource;
 		this.fromDate = fromDate;
 		this.toDate = toDate;
@@ -41,27 +40,21 @@ public class ClaimRequestDto {
 
 
 	public String getProductTypeSource() {
-		System.out.println("DTO get source = " + productTypeSource);
 		return productTypeSource;
 	}
 	public void setProductTypeSource(String productTypeSource) {
-		System.out.println("DTO set source = " + productTypeSource);
 		this.productTypeSource = productTypeSource;
 	}
 	public LocalDate getFromDate() {
-		System.out.println("DTO get fromDate = " + fromDate);
 		return fromDate;
 	}
 	public void setFromDate(LocalDate fromDate) {
-		System.out.println("DTO set fromDate = " + fromDate);
 		this.fromDate = fromDate;
 	}
 	public LocalDate getToDate() {
-		System.out.println("DTO get toDate = " + toDate);
 		return toDate;
 	}
 	public void setToDate(LocalDate toDate) {
-		System.out.println("DTO set toDate = " + toDate);
 		this.toDate = toDate;
 	}
 

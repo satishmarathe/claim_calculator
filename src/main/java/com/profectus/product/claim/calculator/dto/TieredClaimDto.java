@@ -13,7 +13,7 @@ public class TieredClaimDto {
 	@JsonSerialize(using = ToStringSerializer.class) 
 	private LocalDate txDate;
 	
-	private BigDecimal saleAmount;
+	private BigDecimal amount;
 	private BigDecimal discountAmount;
 	
 	public String getProductCode() {
@@ -28,11 +28,11 @@ public class TieredClaimDto {
 	public void setTxDate(LocalDate txDate) {
 		this.txDate = txDate;
 	}
-	public BigDecimal getSaleAmount() {
-		return saleAmount;
+	public BigDecimal getAmount() {
+		return amount;
 	}
-	public void setSaleAmount(BigDecimal saleAmount) {
-		this.saleAmount = saleAmount;
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 	public BigDecimal getDiscountAmount() {
 		return discountAmount;
@@ -44,16 +44,16 @@ public class TieredClaimDto {
 	public TieredClaimDto() {
 		
 	}
-	public TieredClaimDto(String productCode, LocalDate txDate, BigDecimal saleAmount, BigDecimal discountAmount) {
+	public TieredClaimDto(String productCode, LocalDate txDate, BigDecimal amount, BigDecimal discountAmount) {
 		super();
 		this.productCode = productCode;
 		this.txDate = txDate;
-		this.saleAmount = saleAmount;
+		this.amount = amount;
 		this.discountAmount = discountAmount;
 	}
 	@Override
 	public String toString() {
-		return "TieredClaimDto [productCode=" + productCode + ", txDate=" + txDate + ", saleAmount=" + saleAmount
+		return "TieredClaimDto [productCode=" + productCode + ", txDate=" + txDate + ", saleAmount=" + amount
 				+ ", discountAmount=" + discountAmount + "]";
 	}
 }

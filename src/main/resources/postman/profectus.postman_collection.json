@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "d463738c-8a97-4b82-8470-746f8481d2a9",
+		"name": "profectus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "calculate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"productTypeSource\":\"merch\",\n\t\"fromDate\":\"2017-07-01\",\n\t\"toDate\":\"2017-07-05\"\n}"
+				},
+				"url": {
+					"raw": "{{hostname}}/claim/tiered/calc",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"claim",
+						"tiered",
+						"calc"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

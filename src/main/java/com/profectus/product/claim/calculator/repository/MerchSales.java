@@ -1,6 +1,5 @@
 package com.profectus.product.claim.calculator.repository;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -23,8 +22,8 @@ public abstract class MerchSales {
 	@Column(name = "tx_date")
 	private LocalDate txDate;
 	
-	@Column(name = "sale_amount")
-	private BigDecimal saleAmount;
+	//@Column(name = "sale_amount")
+	//private BigDecimal saleAmount;
 
 	public String getProductCode() {
 		return productCode;
@@ -41,7 +40,8 @@ public abstract class MerchSales {
 	public void setTxDate(LocalDate txDate) {
 		this.txDate = txDate;
 	}
-
+	
+	/**
 	public BigDecimal getSaleAmount() {
 		return saleAmount;
 	}
@@ -49,6 +49,7 @@ public abstract class MerchSales {
 	public void setSaleAmount(BigDecimal saleAmount) {
 		this.saleAmount = saleAmount;
 	}
+	**/
 
 	
 }

@@ -2,6 +2,10 @@ package com.profectus.product.claim.calculator.service;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +14,13 @@ import com.profectus.product.claim.calculator.repository.DiscountTier;
 import com.profectus.product.claim.calculator.repository.DiscountTierDto;
 import com.profectus.product.claim.calculator.repository.DiscountTierRepository;
 
+
+
 @Service
 public class DiscountTierServiceImpl implements DiscountTierService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DiscountTierServiceImpl.class);
+	
 	@Autowired
 	private DiscountTierRepository discountTierRepository;
 
@@ -31,4 +40,10 @@ public class DiscountTierServiceImpl implements DiscountTierService {
 		}		
 		return Constants.discountTierList;
 	}
+	
+	@PostConstruct
+    public void init() {
+		LOGGER.info(" {} | This is a test","xAppCorelationId");
+        //LOG.info(Arrays.asList(environment.getDefaultProfiles()));
+    }
 }
